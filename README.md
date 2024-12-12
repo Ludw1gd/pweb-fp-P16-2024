@@ -4,7 +4,7 @@
 
 1. Clone repo ini
 
-2. `npm install`
+2. `npm install` di directory backend dan frontend.
 
 3. Buat file `.env` untuk setup variabel environment connection string mongodb atlas, port dan token:
 

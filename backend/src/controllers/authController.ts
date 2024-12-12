@@ -2,13 +2,26 @@ import { User } from "../models/user";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
+import { stat } from "fs";
 
 export const login = async (req: Request, res: Response): Promise<void> => {
     const { username, password, role } = req.body;
-    if (!username || !password) {
+    const validRoles = ['USER', 'ADMIN'];
+
+    if (!username || !password || !role) {
         res.status(400).json({
             status: 'failed',
-            message: 'Username or password is required',
+            message: 'Username, password, and role are required',
+            data: {},
+        });
+        return;
+    }
+
+    // validasi role
+    if (!validRoles.includes(role)) {
+        res.status(400).json({
+            status: 'failed',
+            message: `Invalid role. Allowed roles: ${validRoles.join(', ')}`,
             data: {},
         });
         return;
@@ -24,7 +37,18 @@ export const login = async (req: Request, res: Response): Promise<void> => {
             });
             return;
         }
+
+        // validasi role yg dikirim dgn role di database
+        if (user.role !== role) {
+            res.status(403).json({
+                status: 'failed',
+                message: 'Role mismatch',
+                data: {},
+            });
+            return;
+        }
         
+        // validasi password
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
             res.status(401).json({ 
@@ -34,6 +58,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
             return;
         }
 
+        // generate token
         const token = jwt.sign(
             { id: user._id, role: user.role },
             process.env.JWT_SECRET as string,
@@ -46,7 +71,8 @@ export const login = async (req: Request, res: Response): Promise<void> => {
             status: 'success',
             message: 'Login success',
             user: {
-                username: user.username
+                username: user.username,
+                role: user.role,
             },
             token
         });
@@ -54,7 +80,8 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
     catch (error) {
         res.status(500).json({ 
-            message: 'Error logging in', error 
+            status: 'failed',
+            message: 'Error logging in', error
         });
     }
 };

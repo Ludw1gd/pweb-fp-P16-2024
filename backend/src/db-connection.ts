@@ -14,6 +14,6 @@ export const connectDB = async () => {
 
     catch (error) {
         console.error('Failed to connect to MongoDB Atlas', error);
-        process.exit(1); // exit ptocess with failure
+        process.exit(1); // exit process with failure
     }
 };
