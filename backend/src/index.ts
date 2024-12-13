@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5050;
 
 // konfigurasi cors
 app.use(cors({
-    origin: 'http://localhost:5175', // izinkan akses dri front-end
+    origin: 'http://localhost:5173', // izinkan akses dri front-end
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], // sesuaikan metoda yg diizinkan
     credentials: true, // jika ada cookie/session
 }));

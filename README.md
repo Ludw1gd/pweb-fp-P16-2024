@@ -16,4 +16,4 @@ JWT_SECRET="ghcchcghg"
 
 4. Jalankan server backend `npm run start:dev` di directory `backend`.
 
-5. Jalankan server frontend `npm run start` di directory `frontend`.
+5. Jalankan server frontend `npm run dev` di directory `frontend`.
