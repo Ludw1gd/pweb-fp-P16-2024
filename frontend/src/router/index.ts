@@ -14,10 +14,10 @@ const routes = [
   {
     path: "/rules",
     component: Rules // Add the rules route
-  }
-  // { path: '/admin', component: DataBarang },
-  // { path: '/admin/all-operator', component: DataPetugas },
-  // { path: '/admin/summary', component: DataPeminjaman },
+  },
+  { path: '/admin', component: DataBarang },
+  { path: '/admin/all-operator', component: DataPetugas },
+  { path: '/admin/summary', component: DataPinjam },
 ];
 
 export default createRouter({
