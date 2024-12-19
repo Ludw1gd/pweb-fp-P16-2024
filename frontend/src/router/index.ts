@@ -2,9 +2,9 @@ import { createRouter, createWebHistory } from "vue-router";
 import LoginForm from "@/views/LoginForm.vue";
 import Rules from "@/views/Rules.vue";
 
-// import DataBarang from './components/admin/DataBarang.vue';
-// import DataPetugas from './components/admin/DataPetugas.vue';
-// import DataPeminjaman from './components/admin/DataPeminjaman.vue';
+// import DataBarang from '@/components/DataBarang.vue';
+import DataPetugas from '@/components/DataPetugas.vue';
+import DataPinjam from '@/components/DataPinjam.vue';
 
 const routes = [
   { 
