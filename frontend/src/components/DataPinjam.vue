@@ -1,6 +1,6 @@
 <template>
     <div>
-      <h1>Data Peminjaman</h1>
+      <h1 style="text-align: center;"><strong>Data Peminjaman</strong></h1>
       <table>
         <thead>
           <tr>
@@ -28,7 +28,7 @@
     </div>
   </template>
 
-<!-- <script>
+<script>
 export default {
   data() {
     return {
@@ -36,4 +36,25 @@ export default {
     };
   },
 };
-</script> -->
+</script>
+
+<style scoped>
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+th {
+  background-color: #f4f4f4;
+}
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+tr:hover {
+  background-color: #f1f1f1;
+}
+</style>
