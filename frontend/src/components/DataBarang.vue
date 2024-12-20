@@ -136,6 +136,9 @@ tr:nth-child(even) {
 tr:hover {
   background-color: #f1f1f1;
 }
+th:nth-child(1), td:nth-child(1) {
+width: 60px; 
+}
 
 /* modal */
 .modal-overlay {

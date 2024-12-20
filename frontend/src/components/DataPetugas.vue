@@ -1,46 +1,46 @@
 <template>
   <div>
     <div class="container">
-    <div class="header">
-      <h1>Data Petugas</h1>
+      <div class="header">
+        <h1 style="font-size:2rem;"><strong>Data Petugas</strong></h1>
+      </div>
+      <!-- Form untuk menambah operator -->
+      <form @submit.prevent="addOperator">
+        <input v-model="newOperator.username" placeholder="Nama Petugas" required />
+        <input v-model="newOperator.password" placeholder="Password" required type="password" />
+        <button type="submit">{{ isEditing ? "Update Petugas" : "Tambah Petugas" }}</button>
+      </form>
+    
+      <!-- Tabel untuk menampilkan daftar petugas -->
+      <table>
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="operator in operators" :key="operator.id">
+            <td>{{ operator.username }}</td>
+            <td>
+              <button @click="editOperator(operator.id)">Edit</button>
+              <button @click="deleteOperator(operator.id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <!-- Form untuk menambah operator -->
-    <form @submit.prevent="addOperator">
-      <input v-model="newOperator.username" placeholder="Nama Petugas" required />
-      <input v-model="newOperator.password" placeholder="Password" required type="password" />
-      <button type="submit">{{ isEditing ? "Update Petugas" : "Tambah Petugas" }}</button>
-    </form>
-  
-    <!-- Tabel untuk menampilkan daftar petugas -->
-    <table>
-      <thead>
-        <tr>
-          <th>Nama</th>
-          <th>Aksi</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="operator in operators" :key="operator.id">
-          <td>{{ operator.username }}</td>
-          <td>
-            <button @click="editOperator(operator.id)">Edit</button>
-            <button @click="deleteOperator(operator.id)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
   </div>
-</div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      operators: [
-        // Contoh data operator
-        { id: 1, username: "Operator 1", password: "password123" },
-        { id: 2, username: "Operator 2", password: "password456" },
+      user: [
+        // { id: 1, username: "Operator 1", password: "password123" },
+        // { id: 2, username: "Operator 2", password: "password456" },
       ],
       newOperator: {
         username: '',
@@ -98,10 +98,10 @@ export default {
 </script>
 
 <style scoped>
-/* Styling untuk tabel dan form */
 table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 20px;
 }
 th, td {
   border: 1px solid #ddd;
@@ -111,12 +111,16 @@ th, td {
 th {
   background-color: #f4f4f4;
 }
+th:nth-child(1), td:nth-child(1) {
+width: 60px; 
+}
 tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 tr:hover {
   background-color: #f1f1f1;
 }
+
 form input {
   padding: 8px;
   margin-right: 10px;
@@ -152,6 +156,6 @@ button[type="button"]:hover {
   margin-bottom: 20px;
 }
 .container {
-  margin: 0px;
+  margin: 20px; /* Menambahkan margin keseluruhan */
 }
 </style>
