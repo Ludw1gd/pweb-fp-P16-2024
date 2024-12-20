@@ -1,32 +1,35 @@
 <template>
-    <div>
-      <h1 style="text-align: center;"><strong>Data Peminjaman</strong></h1>
-      <table>
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Nama Barang</th>
-            <th>Jumlah Pinjam</th>
-            <th>Tgl. Pinjam</th>
-            <th>Tgl. Kembali</th>
-            <th>Peminjam</th>
-            <th>Petugas</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(borrow, index) in borrowItems" :key="borrow.id">
-            <td>{{ index + 1 }}</td>
-            <td>{{ borrow.item_name }}</td>
-            <td>{{ borrow.amount }}</td>
-            <td>{{ borrow.borrow_date }}</td>
-            <td>{{ borrow.return_date }}</td>
-            <td>{{ borrow.borrower_name }}</td>
-            <td>{{ borrow.officer_name }}</td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="container">
+    <div class="header">
+      <h1 style="font-size:2rem;"><strong>Data Peminjaman</strong></h1>
     </div>
-  </template>
+    <br>
+    <table>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama Barang</th>
+          <th>Jumlah Pinjam</th>
+          <th>Tgl. Pinjam</th>
+          <th>Tgl. Kembali</th>
+          <th>Peminjam</th>
+          <th>Petugas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(borrow, index) in borrowItems" :key="borrow.id">
+          <td>{{ index + 1 }}</td>
+          <td>{{ borrow.item_name }}</td>
+          <td>{{ borrow.amount }}</td>
+          <td>{{ borrow.borrow_date }}</td>
+          <td>{{ borrow.return_date }}</td>
+          <td>{{ borrow.borrower_name }}</td>
+          <td>{{ borrow.officer_name }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
 
 <script>
 export default {
@@ -39,6 +42,10 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  margin: 20px;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;

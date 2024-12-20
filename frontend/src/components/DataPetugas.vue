@@ -1,53 +1,157 @@
 <template>
-    <div>
+  <div>
+    <div class="container">
+    <div class="header">
       <h1>Data Petugas</h1>
-      <form @submit.prevent="addOperator">
-        <input v-model="newOperator.username" placeholder="Nama Petugas" required />
-        <input v-model="newOperator.password" placeholder="Password" required type="password" />
-        <button type="submit">Tambah Petugas</button>
-      </form>
-  
-      <table>
-        <thead>
-          <tr>
-            <th>Nama</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="operator in operators" :key="operator.id">
-            <td>{{ operator.username }}</td>
-            <td>
-              <button @click="editOperator(operator.id)">Edit</button>
-              <button @click="deleteOperator(operator.id)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
     </div>
-  </template>
+    <!-- Form untuk menambah operator -->
+    <form @submit.prevent="addOperator">
+      <input v-model="newOperator.username" placeholder="Nama Petugas" required />
+      <input v-model="newOperator.password" placeholder="Password" required type="password" />
+      <button type="submit">{{ isEditing ? "Update Petugas" : "Tambah Petugas" }}</button>
+    </form>
+  
+    <!-- Tabel untuk menampilkan daftar petugas -->
+    <table>
+      <thead>
+        <tr>
+          <th>Nama</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="operator in operators" :key="operator.id">
+          <td>{{ operator.username }}</td>
+          <td>
+            <button @click="editOperator(operator.id)">Edit</button>
+            <button @click="deleteOperator(operator.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</template>
 
-<!-- <script>
+<script>
 export default {
   data() {
     return {
-      operators: [],
+      operators: [
+        // Contoh data operator
+        { id: 1, username: "Operator 1", password: "password123" },
+        { id: 2, username: "Operator 2", password: "password456" },
+      ],
       newOperator: {
         username: '',
         password: '',
       },
+      isEditing: false, // Menandakan apakah sedang dalam mode edit
+      currentOperatorId: null, // Menyimpan ID operator yang sedang diedit
     };
   },
   methods: {
+    // Menambahkan atau memperbarui operator
     addOperator() {
-      // Logic to add operator
+      if (this.isEditing) {
+        // Update operator yang sudah ada
+        const operatorIndex = this.operators.findIndex(
+          (operator) => operator.id === this.currentOperatorId
+        );
+        if (operatorIndex !== -1) {
+          this.operators[operatorIndex] = { ...this.newOperator, id: this.currentOperatorId };
+        }
+        this.isEditing = false;
+        this.currentOperatorId = null;
+      } else {
+        // Tambahkan operator baru
+        const newId = this.operators.length ? this.operators[this.operators.length - 1].id + 1 : 1;
+        this.operators.push({ ...this.newOperator, id: newId });
+      }
+      this.resetForm(); // Reset form setelah simpan
     },
+    
+    // Mengedit data operator
     editOperator(id) {
-      // Logic to edit operator
+      const operator = this.operators.find((operator) => operator.id === id);
+      if (operator) {
+        this.newOperator = { username: operator.username, password: operator.password };
+        this.isEditing = true;
+        this.currentOperatorId = id;
+      }
     },
+    
+    // Menghapus operator berdasarkan ID
     deleteOperator(id) {
-      // Logic to delete operator
+      const index = this.operators.findIndex((operator) => operator.id === id);
+      if (index !== -1) {
+        this.operators.splice(index, 1);
+      }
+    },
+    
+    // Reset form input setelah submit
+    resetForm() {
+      this.newOperator = { username: '', password: '' };
     },
   },
 };
-</script> -->
+</script>
+
+<style scoped>
+/* Styling untuk tabel dan form */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+th {
+  background-color: #f4f4f4;
+}
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+tr:hover {
+  background-color: #f1f1f1;
+}
+form input {
+  padding: 8px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+}
+button[type="submit"]:hover {
+  background-color: #45a049;
+}
+button[type="button"] {
+  background-color: #f44336;
+  color: white;
+}
+button[type="button"]:hover {
+  background-color: #d32f2f;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.container {
+  margin: 0px;
+}
+</style>
