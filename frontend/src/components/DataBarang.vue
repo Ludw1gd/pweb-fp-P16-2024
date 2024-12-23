@@ -9,17 +9,23 @@
     <div v-if="showModal" class="modal-overlay">
       <div class="modal">
         <h2 style="font-weight: bold;">{{ isEditing ? "Edit Barang" : "Tambah Barang" }}</h2>
-        <form @submit.prevent="addItem">
-          <input v-model="newItem.name" placeholder="Nama Barang" required />
-          <input v-model="newItem.amount" type="number" placeholder="Jumlah" required />
-          <input v-model="newItem.condition" placeholder="Kondisi" required />
-          <input v-model="newItem.created_at" type="date" required />
-          <br>
-          <div class="modal-actions">
-            <button type="submit">{{ isEditing ? "Simpan Perubahan" : "Tambah" }}</button>
-            <button type="cancel" @click="closeModal">Batal</button>
-          </div>
-        </form>
+          <form @submit.prevent="addItem">
+            <input v-model="newItem.name" placeholder="Nama Barang" required />
+            <input v-model="newItem.amount" type="number" placeholder="Jumlah" required />
+            <select v-model="newItem.condition" required>
+              <option value="" disabled>Pilih Kondisi</option>
+              <option value="Sangat Baik">Sangat Baik</option>
+              <option value="Baik">Baik</option>
+              <option value="Buruk">Buruk</option>
+              <option value="Rusak">Rusak</option>
+            </select>
+            <input v-model="newItem.created_at" type="date" required />
+            <br>
+            <div class="modal-actions">
+              <button type="submit">{{ isEditing ? "Simpan Perubahan" : "Tambah" }}</button>
+              <button type="cancel" @click="closeModal">Batal</button>
+            </div>
+          </form>
       </div>
     </div>
 
@@ -42,8 +48,9 @@
           <td>{{ item.condition }}</td>
           <td>{{ item.created_at }}</td>
           <td>
-            <button @click="editItem(item.id)">Edit</button>
-            <button @click="deleteItem(item.id)">Delete</button>
+            <button type="editItem" @click="editItem(item.id)">Edit</button>
+            &nbsp;
+            <button type="deleteItem" @click="deleteItem(item.id)">Delete</button>
           </td>
         </tr>
       </tbody>
@@ -56,16 +63,16 @@
 export default {
   data() {
     return {
-      items: [], // List of items
+      item: [],
       newItem: {
         name: '',
         amount: '',
         condition: '',
         created_at: '',
       },
-      showModal: false, // Control visibility of the modal
-      isEditing: false, // Track if in edit mode
-      editIndex: null, // Track the index of the item being edited
+      showModal: false,
+      isEditing: false,
+      editIndex: null, 
     };
   },
   methods: {
@@ -93,6 +100,7 @@ export default {
     },
     deleteItem(id) {
       this.items = this.items.filter(item => item.id !== id); // Remove item from the list
+      this.sortItemsByDate(); // Sort items after deletion
     },
     closeModal() {
       // Close the modal and reset form
@@ -111,6 +119,7 @@ export default {
   },
 };
 </script>
+
 
 <style scoped>
 div {
@@ -221,7 +230,7 @@ button[type="cancel"]:hover {
 }
 
 .btn-add:hover {
-  background-color: #45a049;
+  background-color: #d6ccad;
 }
 
 .header {
@@ -232,5 +241,39 @@ button[type="cancel"]:hover {
 }
 .container {
   margin: 0px;
+}
+
+/* dropdown */
+select {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  background-color: white;
+  font-size: 16px;
+}
+
+select:focus {
+  border-color: #000000;
+}
+
+/* aksi */
+button[type="editItem"] {
+  background-color: #4CAF50;
+  color: white;
+}
+button[type="deleteItem"] {
+  background-color: #f44336;
+  color: white;
+}
+button[type="editItem"]:hover {
+  background-color: #a8e5aa;
+  color: white;
+}
+button[type="deleteItem"]:hover {
+  background-color: #e7a5a0;
+  color: white;
 }
 </style>
