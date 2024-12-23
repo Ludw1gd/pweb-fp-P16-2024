@@ -4,14 +4,12 @@
       <div class="header">
         <h1 style="font-size:2rem;"><strong>Data Petugas</strong></h1>
       </div>
-      <!-- Form untuk menambah operator -->
-      <form @submit.prevent="addOperator">
-        <input v-model="newOperator.username" placeholder="Nama Petugas" required />
-        <input v-model="newOperator.password" placeholder="Password" required type="password" />
+      <form @submit.prevent="addUser">
+        <input v-model="newUser.username" placeholder="Nama Petugas" required />
+        <input v-model="newUser.password" placeholder="Password" required type="password" />
         <button type="submit">{{ isEditing ? "Update Petugas" : "Tambah Petugas" }}</button>
       </form>
     
-      <!-- Tabel untuk menampilkan daftar petugas -->
       <table>
         <thead>
           <tr>
@@ -21,11 +19,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="operator in operators" :key="operator.id">
-            <td>{{ operator.username }}</td>
+          <tr v-for="user in users" :key="user.id">
+            <td>{{ user.username }}</td>
             <td>
-              <button @click="editOperator(operator.id)">Edit</button>
-              <button @click="deleteOperator(operator.id)">Delete</button>
+              <button @click="editUser(user.id)">Edit</button>
+              <button @click="deleteUser(user.id)">Delete</button>
             </td>
           </tr>
         </tbody>
@@ -38,60 +36,53 @@
 export default {
   data() {
     return {
-      user: [
-        // { id: 1, username: "Operator 1", password: "password123" },
-        // { id: 2, username: "Operator 2", password: "password456" },
-      ],
-      newOperator: {
+      user: [],
+      newUser: {
         username: '',
         password: '',
+        role: '',
+        token: '',
       },
-      isEditing: false, // Menandakan apakah sedang dalam mode edit
-      currentOperatorId: null, // Menyimpan ID operator yang sedang diedit
+      isEditing: false,
+      currentUserId: null,
     };
   },
   methods: {
-    // Menambahkan atau memperbarui operator
-    addOperator() {
+    addUser() {
       if (this.isEditing) {
-        // Update operator yang sudah ada
-        const operatorIndex = this.operators.findIndex(
-          (operator) => operator.id === this.currentOperatorId
+        const userIndex = this.users.findIndex(
+          (user) => user.id === this.currentUserId
         );
-        if (operatorIndex !== -1) {
-          this.operators[operatorIndex] = { ...this.newOperator, id: this.currentOperatorId };
+        if (userIndex !== -1) {
+          this.users[userIndex] = { ...this.newUser, id: this.currentUserId };
         }
         this.isEditing = false;
-        this.currentOperatorId = null;
+        this.currentUserId = null;
       } else {
-        // Tambahkan operator baru
-        const newId = this.operators.length ? this.operators[this.operators.length - 1].id + 1 : 1;
-        this.operators.push({ ...this.newOperator, id: newId });
+        const newId = this.users.length ? this.users[this.users.length - 1].id + 1 : 1;
+        this.users.push({ ...this.newUser, id: newId });
       }
-      this.resetForm(); // Reset form setelah simpan
+      this.resetForm();
     },
     
-    // Mengedit data operator
-    editOperator(id) {
-      const operator = this.operators.find((operator) => operator.id === id);
-      if (operator) {
-        this.newOperator = { username: operator.username, password: operator.password };
+    editUser(id) {
+      const user = this.users.find((user) => user.id === id);
+      if (user) {
+        this.newUser = { username: user.username, password: user.password, role: user.role };
         this.isEditing = true;
-        this.currentOperatorId = id;
+        this.currentUserId = id;
       }
     },
     
-    // Menghapus operator berdasarkan ID
-    deleteOperator(id) {
-      const index = this.operators.findIndex((operator) => operator.id === id);
+    deleteUser(id) {
+      const index = this.users.findIndex((user) => user.id === id);
       if (index !== -1) {
-        this.operators.splice(index, 1);
+        this.users.splice(index, 1);
       }
     },
     
-    // Reset form input setelah submit
     resetForm() {
-      this.newOperator = { username: '', password: '' };
+      this.newUser = { username: '', password: '', role: '' };
     },
   },
 };

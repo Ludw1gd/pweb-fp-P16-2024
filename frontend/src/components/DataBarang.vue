@@ -78,37 +78,33 @@ export default {
   methods: {
     addItem() {
       if (this.isEditing) {
-        // Update existing item
         this.items.splice(this.editIndex, 1, { ...this.newItem });
         this.isEditing = false;
         this.editIndex = null;
       } else {
-        // Add new item
         const newId = this.items.length ? this.items[this.items.length - 1].id + 1 : 1;
         this.items.push({ ...this.newItem, id: newId });
       }
-      this.closeModal(); // Close the modal
+      this.closeModal();
     },
     editItem(id) {
       const index = this.items.findIndex(item => item.id === id);
       if (index !== -1) {
-        this.newItem = { ...this.items[index] }; // Populate form with the item data
+        this.newItem = { ...this.items[index] };
         this.isEditing = true;
         this.editIndex = index;
-        this.showModal = true; // Show modal for editing
+        this.showModal = true;
       }
     },
     deleteItem(id) {
-      this.items = this.items.filter(item => item.id !== id); // Remove item from the list
-      this.sortItemsByDate(); // Sort items after deletion
+      this.items = this.items.filter(item => item.id !== id);
+      this.sortItemsByDate();
     },
     closeModal() {
-      // Close the modal and reset form
       this.showModal = false;
       this.resetForm();
     },
     resetForm() {
-      // Clear form data
       this.newItem = {
         name: '',
         amount: '',
