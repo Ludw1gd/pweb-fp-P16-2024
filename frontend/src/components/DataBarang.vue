@@ -63,7 +63,7 @@
 export default {
   data() {
     return {
-      items: [],  // Menyimpan data barang
+      items: [], 
       newItem: {
         name: '',
         amount: '',
@@ -78,33 +78,30 @@ export default {
   methods: {
     addItem() {
       if (this.isEditing) {
-        // Update item yang sudah ada dengan nilai baru
         this.items.splice(this.editIndex, 1, { ...this.newItem });
         this.isEditing = false;
         this.editIndex = null;
       } else {
-        // Tambahkan item baru
         const newId = this.items.length ? this.items[this.items.length - 1].id + 1 : 1;
         this.items.push({ ...this.newItem, id: newId });
       }
-      this.closeModal(); // Menutup modal setelah item ditambahkan
+      this.closeModal();
     },
     editItem(id) {
       const index = this.items.findIndex(item => item.id === id);
       if (index !== -1) {
-        // Salin data item yang ingin diedit ke newItem
         this.newItem = { ...this.items[index] };
         this.isEditing = true;
-        this.editIndex = index;  // Menyimpan index untuk mengupdate item setelah edit
-        this.showModal = true;  // Tampilkan modal
+        this.editIndex = index;
+        this.showModal = true;
       }
     },
     deleteItem(id) {
       this.items = this.items.filter(item => item.id !== id);
     },
     closeModal() {
-      this.showModal = false;  // Menutup modal
-      this.resetForm();  // Reset form untuk menghindari data yang tertinggal
+      this.showModal = false;
+      this.resetForm();
     },
     resetForm() {
       this.newItem = {

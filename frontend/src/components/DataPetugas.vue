@@ -31,8 +31,8 @@
             <td>{{ user.username }}</td>
             <td>{{ user.role }}</td>
             <td>
-              <button @click="editUser(user.id)">Edit</button>
-              <button @click="deleteUser(user.id)">Delete</button>
+              <button type="edit" @click="editUser(user.id)">Edit</button>&nbsp;
+              <button type="delete" @click="deleteUser(user.id)">Delete</button>
             </td>
           </tr>
         </tbody>
@@ -45,7 +45,7 @@
 export default {
   data() {
   return {
-    users: [], // Data petugas akan disimpan di sini
+    users: [],
     newUser: {
       username: '',
       password: '',
@@ -136,11 +136,11 @@ button {
   cursor: pointer;
 }
 button[type="submit"] {
-  background-color: #4CAF50;
+  background-color: #d4bc75;
   color: white;
 }
 button[type="submit"]:hover {
-  background-color: #45a049;
+  background-color: #cec19b;
 }
 button[type="button"] {
   background-color: #f44336;
@@ -157,6 +157,22 @@ button[type="button"]:hover {
   margin-bottom: 20px;
 }
 .container {
-  margin: 20px; /* Menambahkan margin keseluruhan */
+  margin: 20px;
+}
+button[type="edit"] {
+  background-color: #4CAF50;
+  color: white;
+}
+button[type="delete"] {
+  background-color: #f44336;
+  color: white;
+}
+button[type="edit"]:hover {
+  background-color: #a8e5aa;
+  color: white;
+}
+button[type="delete"]:hover {
+  background-color: #e7a5a0;
+  color: white;
 }
 </style>
