@@ -7,20 +7,29 @@
       <form @submit.prevent="addUser">
         <input v-model="newUser.username" placeholder="Nama Petugas" required />
         <input v-model="newUser.password" placeholder="Password" required type="password" />
-        <button type="submit">{{ isEditing ? "Update Petugas" : "Tambah Petugas" }}</button>
-      </form>
+        <select v-model="newUser.role" required>
+          <option disabled value="">Sebagai</option>
+          <option value="Admin">Admin</option>
+          <option value="Operator">Operator</option>
+        </select>
+      <button type="submit">{{ isEditing ? "Update Petugas" : "Tambah Petugas" }}</button>
+    </form>
+
     
       <table>
         <thead>
           <tr>
             <th>No</th>
             <th>Nama</th>
+            <th>Role</th>
             <th>Aksi</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="user in users" :key="user.id">
+          <tr v-for="(user, index) in users" :key="user.id">
+            <td>{{ index + 1 }}</td>
             <td>{{ user.username }}</td>
+            <td>{{ user.role }}</td>
             <td>
               <button @click="editUser(user.id)">Edit</button>
               <button @click="deleteUser(user.id)">Delete</button>
@@ -35,60 +44,61 @@
 <script>
 export default {
   data() {
-    return {
-      User: [],
-      newUser: {
-        username: '',
-        password: '',
-        role: '',
-        token: '',
-      },
-      isEditing: false,
-      currentUserId: null,
-    };
+  return {
+    users: [], // Data petugas akan disimpan di sini
+    newUser: {
+      username: '',
+      password: '',
+      role: '',
+    },
+    isEditing: false,
+    currentUserId: null,
+  };
+},
+
+methods: {
+  addUser() {
+    if (this.isEditing) {
+      const userIndex = this.users.findIndex(user => user.id === this.currentUserId);
+      if (userIndex !== -1) {
+        this.users[userIndex] = { ...this.newUser, id: this.currentUserId };
+      }
+      this.isEditing = false;
+      this.currentUserId = null;
+    } else {
+      const newId = this.users.length ? this.users[this.users.length - 1].id + 1 : 1;
+      this.users.push({ ...this.newUser, id: newId });
+    }
+    this.resetForm();
   },
-  methods: {
-    addUser() {
-      if (this.isEditing) {
-        const userIndex = this.users.findIndex(
-          (user) => user.id === this.currentUserId
-        );
-        if (userIndex !== -1) {
-          this.users[userIndex] = { ...this.newUser, id: this.currentUserId };
-        }
-        this.isEditing = false;
-        this.currentUserId = null;
-      } else {
-        const newId = this.users.length ? this.users[this.users.length - 1].id + 1 : 1;
-        this.users.push({ ...this.newUser, id: newId });
-      }
-      this.resetForm();
-    },
-    
-    editUser(id) {
-      const user = this.users.find((user) => user.id === id);
-      if (user) {
-        this.newUser = { username: user.username, password: user.password, role: user.role };
-        this.isEditing = true;
-        this.currentUserId = id;
-      }
-    },
-    
-    deleteUser(id) {
-      const index = this.users.findIndex((user) => user.id === id);
-      if (index !== -1) {
-        this.users.splice(index, 1);
-      }
-    },
-    
-    resetForm() {
-      this.newUser = { username: '', password: '', role: '' };
-    },
+  editUser(id) {
+    const user = this.users.find(user => user.id === id);
+    if (user) {
+      this.newUser = { ...user };
+      this.isEditing = true;
+      this.currentUserId = id;
+    }
   },
+  deleteUser(id) {
+    this.users = this.users.filter(user => user.id !== id);
+  },
+  resetForm() {
+    this.newUser = { username: '', password: '', role: '' };
+  },
+}
 };
 </script>
 
 <style scoped>
+form select {
+  padding: 8px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  background: #fff;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
