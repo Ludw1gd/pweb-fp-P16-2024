@@ -19,6 +19,7 @@ const seedUsers = async () => {
         const users = [
             { username: 'admin', password: hashedPassword, role: 'ADMIN' },
             { username: 'tio', password: hashedPassword, role: 'USER' },
+            { username: 'ichi', password: hashedPassword, role: 'ADMIN' },
         ];
 
         // isnert user into the database
