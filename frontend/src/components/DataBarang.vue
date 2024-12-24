@@ -1,10 +1,9 @@
 <template>
-  <div>
-    <div class="container">
-      <div class="header">
-        <h1 style="font-size:2rem;"><strong>Data Barang</strong></h1>
-        <button class="btn-add" @click="showModal = true">Tambah Barang</button>
-      </div>
+<div class="bg-custom-beige min-h-screen p-6">
+    <div class="header">
+      <h1 style="font-size:2rem;"><strong>Data Barang</strong></h1>
+      <button class="btn-add" @click="showModal = true">Tambah Barang</button>
+    </div>
     <!-- Modal -->
     <div v-if="showModal" class="modal-overlay">
       <div class="modal">
@@ -23,32 +22,31 @@
       </div>
     </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>Nama</th>
-          <th>Jumlah</th>
-          <th>Kondisi</th>
-          <th>Tanggal Registrasi</th>
-          <th>Aksi</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in items" :key="item.id">
-          <td>{{ item.id }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.amount }}</td>
-          <td>{{ item.condition }}</td>
-          <td>{{ item.created_at }}</td>
-          <td>
-            <button @click="editItem(item.id)">Edit</button>
-            <button @click="deleteItem(item.id)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Nama</th>
+        <th>Jumlah</th>
+        <th>Kondisi</th>
+        <th>Tanggal Registrasi</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="item in items" :key="item.id">
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.amount }}</td>
+        <td>{{ item.condition }}</td>
+        <td>{{ item.created_at }}</td>
+        <td>
+          <button @click="editItem(item.id)">Edit</button>
+          <button @click="deleteItem(item.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 </template>
 
@@ -113,9 +111,9 @@ export default {
 </script>
 
 <style scoped>
-div {
+/* div {
   margin: 20px;
-}
+} */
 
 /* tabel */
 table {

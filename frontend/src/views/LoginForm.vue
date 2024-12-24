@@ -52,26 +52,49 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { useAuthStore } from '@/store/token';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
     setup() {
         const username = ref("");
         const password = ref("");
         const role = ref("USER");
+        const errorMessage = ref("");
         const authStore = useAuthStore();
+        const router = useRouter();
 
         const handleLogin = async () => {
-            await authStore.login({
-                username: username.value,
-                password: password.value,
-                role: role.value
-            });
+            try {
+                const isSuccess = await authStore.login({
+                    username: username.value,
+                    password: password.value,
+                    role: role.value
+                });
+
+                if (isSuccess) {
+                    if (role.value === "ADMIN") {
+                        router.push('/admin');
+                    }
+                    // uncomment dan atur bawah ini untuk page endpoint petugas/operator
+                    else {
+                        router.push('/dashboard');
+                    }
+                }
+                else {
+                    errorMessage.value = "Invalid username or password."
+                }
+            }
+
+            catch (error) {
+                errorMessage.value = "Login failed. Please try again.";
+            }
         };
 
         return {
             username,
             password,
             role,
+            errorMessage,
             handleLogin,
         };
     },

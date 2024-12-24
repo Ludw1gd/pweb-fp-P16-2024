@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="bg-custom-beige min-h-screen p-6">
     <div class="header">
       <h1 style="font-size:2rem;"><strong>Data Peminjaman</strong></h1>
     </div>

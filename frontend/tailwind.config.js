@@ -12,6 +12,9 @@ export default {
           plum: "#59344f",
         },
       },
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'],
+      },
     },
   },
   plugins: [],

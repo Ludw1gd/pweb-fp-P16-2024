@@ -17,10 +17,12 @@ export const useAuthStore = defineStore("auth", {
                 this.token = response.data.token;
                 localStorage.setItem("token", this.token);
                 alert("Login succesfull!");
+                return true;
             }
 
             catch (error) {
                 alert("Login failed: " + error.response?.data?.message || "Unknown error");
+                return false;
             }
         },
         logout () {

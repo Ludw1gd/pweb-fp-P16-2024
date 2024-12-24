@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="container">
+  <div class="bg-custom-beige flex">
+    <div class="container min-h-screen">
       <div class="header">
         <h1 style="font-size:2rem;"><strong>Data Petugas</strong></h1>
       </div>

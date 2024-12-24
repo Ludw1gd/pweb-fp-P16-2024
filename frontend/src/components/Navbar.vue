@@ -1,5 +1,5 @@
 <template>
-    <nav class="bg-custom-plum p-4">
+    <nav class="bg-custom-plum p-4 sticky top-0 z-50 shadow-md">
         <div class="container mx-auto flex justify-between items-center">
             <div class="text-custom-gold text-lg font-semibold">Alat Peminjaman</div>
             <div class="flex items-center space-x-4">
