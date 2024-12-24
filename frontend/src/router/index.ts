@@ -5,6 +5,7 @@ import Rules from "@/views/Rules.vue";
 import DataBarang from '@/components/DataBarang.vue';
 import DataPetugas from '@/components/DataPetugas.vue';
 import DataPinjam from '@/components/DataPinjam.vue';
+import AdminPage from "@/components/AdminPage.vue";
 
 const routes = [
   { 
@@ -18,6 +19,7 @@ const routes = [
   { path: '/admin', component: DataBarang },
   { path: '/admin/all-operator', component: DataPetugas },
   { path: '/admin/summary', component: DataPinjam },
+  { path: '/admin-page', component: AdminPage },
 ];
 
 export default createRouter({
