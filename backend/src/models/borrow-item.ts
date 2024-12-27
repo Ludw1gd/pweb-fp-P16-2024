@@ -7,6 +7,7 @@ interface IBorrowItem extends Document {
     return_date: Date;
     borrower_name: string;
     officer_name: string;
+    status: string;
 }
 
 const BorrowItemSchema: Schema = new Schema({
