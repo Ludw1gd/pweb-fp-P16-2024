@@ -15,7 +15,8 @@ const BorrowItemSchema: Schema = new Schema({
     borrow_date: { type: Date, required: true },
     return_date: { type: Date, required: true },
     borrower_name: { type: String, required: true },
-    officer_name: { type: String, required: true }
+    officer_name: { type: String, required: true },
+    status: { type: String, default: 'borrowed' },
 });
 
 export const BorrowItem = mongoose.model<IBorrowItem>('BorrowItem', BorrowItemSchema);
